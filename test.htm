@@ -1,0 +1,48 @@
+<html>
+	<head>
+		<link rel='stylesheet' type='text/css' href='timeline.css' />
+		<script type='text/javascript' src='timeline.js'></script>
+		<script type='text/javascript'>
+			(function(NS, $$) {
+				// Initialize the test namespace
+				var ns = window[NS] = window[NS] || {};
+				
+				ns.initialize = function() {
+					// Make a new timeline with our div
+					ns.timeline = new Timeline($$("#timeline"));
+
+					var events = [
+						{title: "Test" , time: "1 day" , started: null , description: ""} , 
+						{title: "Foo"  , time: "1 day" , started: null , description: ""} , 
+						{title: "Bar"  , time: "1 day" , started: null , description: ""} , 
+						{title: "Bin"  , time: "1 day" , started: null , description: ""} , 
+					];
+					
+					var event;
+
+					for(var i=0; i<events.length; ++i) {
+						event = events[i];
+						
+						ns.timeline.addEvent({
+							date        : new Date((Math.ceil(Math.random() * 10)) + " Jun 2013"),
+							title       : event.title,
+							description : event.description,
+						});
+					}
+				};
+
+				// Set a document.readyState timer
+				ns.timer = window.setInterval(function() {
+					// See if the document is finished loading
+					if(document.readyState == 'complete') {
+						// Kill the timer and initialize the namespace
+						ns.initialize(window.clearInterval(ns.timer));
+					}
+				}, 100);
+			})("test", function() { return document.querySelectorAll.apply(document, arguments) });
+		</script>
+	</head>
+	<body>
+		<div id='timeline' class='foo bar'></div>
+	</body>
+</html>
